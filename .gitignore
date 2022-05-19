@@ -1,0 +1,9 @@
+.env
+.env-test
+.env-prod
+.DS_Store
+certificates/*.txt
+
+!somefolder/.gitkeep
+
+token
