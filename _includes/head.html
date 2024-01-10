@@ -1,0 +1,25 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- seo -%}
+  <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
+  {%- feed_meta -%}
+  {%- if jekyll.environment == 'production' and site.google_analytics -%}
+    {%- include google-analytics.html -%}
+  {%- endif -%}
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;700&display=swap');
+
+    body {
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      /* font-weight: 700; */
+    }
+    .post-list-heading {
+      font-size: 10em;
+      font-weight: 700;
+    }
+  </style>
+</head>
