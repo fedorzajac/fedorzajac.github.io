@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "🪔 Python 3.11 and torch on fedora 39"
-date:   2024-01-09 15:07:01 +0100
+date:   2024-01-10 10:40:32 +0100
 categories: fedora linux torch python
 ---
 
