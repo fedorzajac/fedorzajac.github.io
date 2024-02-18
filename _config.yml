@@ -33,6 +33,8 @@ github_username:  jekyll
 theme: minima
 minima:
     skin: dark
+# remote_theme: broccolini/swiss
+# theme_color: black
 plugins:
   - jekyll-feed
 
