@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  " Generating certificate files"
+title:  "🥭 Generating certificate files"
 date:   2024-02-17 15:06:28 +0100
 categories: ssl certificate
 ---
