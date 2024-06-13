@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Setup Vagrant and Virtualbox on almalinux"
+title:  "🎛️ Setup Vagrant and Virtualbox on almalinux"
 date:   2024-06-06 21:08:53 +0200
 categories: Setup Vagrant and Virtualbox on almalinux
 ---

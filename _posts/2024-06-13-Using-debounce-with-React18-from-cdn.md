@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Using debounce with React18 from cdn"
+title:  "🪫 Using debounce with React18 from cdn"
 date:   2024-06-13 07:57:14 +0200
 categories: Using debounce with React18 from cdn
 ---
