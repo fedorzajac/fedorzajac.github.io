@@ -36,7 +36,7 @@ categories: Songs for Guitar Lessons
 | ty si panom | <a href="https://www.youtube.com/watch?v=lRIH_dprtXI&list=RDJAUX13w9RwI&index=19"><img src="https://img.youtube.com/vi/lRIH_dprtXI/0.jpg" width="200" /></a> |
 | otvor mi oci duch svaty | <a href="https://www.youtube.com/watch?v=zk0HqtNK3so"><img src="https://img.youtube.com/vi/zk0HqtNK3so/0.jpg" width="200" /></a> |
 | meno | <a href="https://www.youtube.com/watch?v=H94uoy33FmU"><img src="https://img.youtube.com/vi/H94uoy33FmU/0.jpg" width="200" /></a> |
-| ride on time | <a href="https://www.youtube.com/watch?v=p1Wv91N6aag"><img src="https://img.youtube.com/vi/p1Wv91N6aag/0.jpg" width="200" /></a> |
+| ride on time | <a href="https://www.youtube.com/watch?v=kz6ll-ssP84"><img src="https://img.youtube.com/vi/kz6ll-ssP84/0.jpg" width="200" /></a> |
 | christmas eve | <a href="https://www.youtube.com/watch?v=hrvXgDvKKBA"><img src="https://img.youtube.com/vi/hrvXgDvKKBA/0.jpg" width="200" /></a> |
 | stay with me | <a href="https://www.youtube.com/watch?v=moR4uw-NWLY"><img src="https://img.youtube.com/vi/moR4uw-NWLY/0.jpg" width="200" /></a> |
 | plastic love | <a href="https://www.youtube.com/watch?v=u6y5NSiRPOw"><img src="https://img.youtube.com/vi/u6y5NSiRPOw/0.jpg" width="200" /></a> |
