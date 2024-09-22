@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Songs for Guitar Lessons"
+title:  "🎸 Songs for Guitar Lessons"
 date:   2024-09-22 12:03:08 +0200
 categories: Songs for Guitar Lessons
 ---
