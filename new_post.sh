@@ -9,7 +9,7 @@ fi
 # Assign arguments to variables
 LAYOUT=post
 TITLE=$1
-CATEGORY1=$1
+CATEGORY1=$2
 # CATEGORY2=$4
 
 # Generate filename based on title and current date
@@ -24,7 +24,7 @@ cat << EOF > "_posts/$FILENAME"
 layout: $LAYOUT
 title:  "$TITLE"
 date:   $DATE
-categories: $CATEGORY1
+categories: $CATEGORY2
 ---
 
 ### Setting up rails app with github primer
