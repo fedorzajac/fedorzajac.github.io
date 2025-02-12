@@ -10,4 +10,6 @@ categories: Useful bash commands
 This command will find all files with name `myfile.txt` within current dirrectory and its subdirectories.
 ```bash
 find . -name myfile.txt
+
+mkdir my_folder && cd $_
 ```
