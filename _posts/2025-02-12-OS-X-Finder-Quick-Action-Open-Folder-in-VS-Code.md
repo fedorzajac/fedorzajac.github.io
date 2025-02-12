@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "OS X Finder Quick Action Open Folder in VS Code"
+title:  "🤖 OS X Finder Quick Action Open Folder in VS Code"
 date:   2025-02-12 21:25:49 +0100
 categories:
 ---
