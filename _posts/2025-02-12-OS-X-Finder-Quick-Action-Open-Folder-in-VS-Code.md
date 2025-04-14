@@ -2,7 +2,7 @@
 layout: post
 title:  "🤖 OS X Finder Quick Action Open Folder in VS Code"
 date:   2025-02-12 21:25:49 +0100
-categories:
+categories: finder quick automation
 ---
 
 # Create a Finder Quick Action to Open Folders in VS Code on macOS

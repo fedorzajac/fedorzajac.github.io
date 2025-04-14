@@ -2,7 +2,7 @@
 layout: post
 title:  "🥤 golang https server"
 date:   2025-03-22 20:50:37 +0100
-categories:
+categories: go golang server https ssl web gin
 ---
 
 ### Run golang gin/gonic as https
