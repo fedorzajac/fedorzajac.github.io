@@ -2,7 +2,7 @@
 layout: post
 title:  "🔑 generating keys for github"
 date:   2025-04-15 14:00:37 +0100
-categories: ssh security github key
+categories: ssh security github key ssl
 ---
 
 ### Generating Keys for Github
