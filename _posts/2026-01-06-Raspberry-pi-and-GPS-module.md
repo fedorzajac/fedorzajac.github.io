@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "🧭 Fun with Raspberry pi and GPS module"
-date:   2026-01-22 10:38:36 +0100
+date:   2026-01-06 10:05:14 +0100
 categories:
 ---
 
