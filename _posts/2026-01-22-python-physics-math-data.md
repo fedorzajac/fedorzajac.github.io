@@ -67,6 +67,12 @@ plt.hist(dt_us, bins=100)
 plt.xlabel("dt (us)")
 plt.ylabel("Counts")
 plt.show()
+```
+
+![description](/assets/img/muon.png)
+
+
+```python
 # 2) Histogram (reasonable number of bins)
 bins = 40
 counts, bin_edges = np.histogram(dt_us, bins=bins)
