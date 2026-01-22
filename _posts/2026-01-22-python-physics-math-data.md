@@ -113,8 +113,8 @@ sigma_tau_est = tau / np.sqrt(N_events)
 print(f"Estimated tau uncertainty ≈ {sigma_tau_est:.4f} µs (tau/√N)")
 ```
 
-[Full Code on Kaggle][def2]
-[Original Data Source][def]
+- [Code on Kaggle][def2]
+- [Original Data Source][def]
 
 
 [def]: https://ciiec.buap.mx/Muon-Decay-Real-Data/
