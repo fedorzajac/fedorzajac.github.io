@@ -5,7 +5,24 @@ date:   2026-02-11 10:05:53 +0100
 categories: mqtt python automation
 ---
 
-# ✉️ Minimal MQTT Demo with Docker and Python
+First things first, let's start with clear terms
+
+| Aspect | MQTT | Kafka |
+|------|------|------|
+| Full name | Message Queuing Telemetry Transport | Apache Kafka |
+| Main purpose | Lightweight messaging | Distributed event streaming |
+| Typical use case | IoT, sensors, embedded devices | Data pipelines, analytics, microservices |
+| Communication model | Publish / Subscribe | Publish / Subscribe (via topics & partitions) |
+| Message size | Very small | Small to large |
+| Message persistence | Optional / limited | Core feature (durable storage) |
+| Replay messages | No (by default) | Yes |
+| Ordering | Best effort | Guaranteed within partition |
+| Scalability focus | Large number of devices | High event throughput |
+| Resource usage | Very low | High |
+| Network conditions | Unreliable, low-bandwidth | Reliable, high-bandwidth |
+| Latency | Very low | Low to moderate |
+| Typical consumers | Devices, lightweight services | Backend services, stream processors |
+
 
 I put together a very small MQTT demo project to refresh the basics and make sure I really understand the moving parts (and not just copy-paste snippets).
 
