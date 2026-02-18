@@ -1,42 +1,49 @@
 ---
 layout: post
-title:  "✉️ Minimal MQTT Demo with Docker and Python"
+title:  "💨 Setting Up Airflow for local development"
 date:   2026-02-11 10:05:53 +0100
-categories: mqtt python automation
+categories: airflow python automation
 ---
 
-First things first, let's start with clear terms
+### Setting up Airflow
 
-| Aspect | MQTT | Kafka |
-|------|------|------|
-| Full name | Message Queuing Telemetry Transport | Apache Kafka |
-| Main purpose | Lightweight messaging | Distributed event streaming |
-| Typical use case | IoT, sensors, embedded devices | Data pipelines, analytics, microservices |
-| Communication model | Publish / Subscribe | Publish / Subscribe (via topics & partitions) |
-| Message size | Very small | Small to large |
-| Message persistence | Optional / limited | Core feature (durable storage) |
-| Replay messages | No (by default) | Yes |
-| Ordering | Best effort | Guaranteed within partition |
-| Scalability focus | Large number of devices | High event throughput |
-| Resource usage | Very low | High |
-| Network conditions | Unreliable, low-bandwidth | Reliable, high-bandwidth |
-| Latency | Very low | Low to moderate |
-| Typical consumers | Devices, lightweight services | Backend services, stream processors |
+Basically it is easy to just follow instructions on airflow [website](https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html#docker-compose-env-variables).
 
+```bash
+# fetch docker compose
+curl -LfO 'https://airflow.apache.org/docs/apache-airflow/3.1.7/docker-compose.yaml'
+# init dirs and airflow UID
+mkdir -p ./dags ./logs ./plugins ./config
+echo -e "AIRFLOW_UID=$(id -u)" > .env
+# initialize airflow config
+docker compose run airflow-cli airflow config list
 
-I put together a very small MQTT demo project to refresh the basics and make sure I really understand the moving parts (and not just copy-paste snippets).
+# optional (if you are on linux)
+volumes:
+  - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags:z
+  - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs:z
+  - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config:z
+  - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins:z
+# no need on mac:
+sudo chmod -R 777 ./config
 
-The setup is intentionally minimal. A Mosquitto broker is started via Docker Compose, so there’s no local installation hassle and the environment is fully reproducible. Once the broker is running, everything else talks to it over `localhost`.
+# and initialize db
+docker compose up airflow-init
 
-On the client side, there are two simple Python scripts using `paho-mqtt`.
+# running:
+docker compose up
+# stopping
+docker compose down --volumes --remove-orphans
+```
+However, this might not be sufficient. You might want to have your own dependencies, so update compose file:
+```yaml
+x-airflow-common:
+  &airflow-common
+    #...
+    _PIP_ADDITIONAL_REQUIREMENTS: 'matplotlib pandas numpy rasterio geopandas'
+    # jwt secret, to the services will communicato to each other
+    AIRFLOW__API_AUTH__JWT_SECRET: '715b414d09ef6791693fbd9668e17323'
+    #...
+```
 
-- **`subscribe.py`** acts as a long-running subscriber, listening on a single topic and printing any incoming messages. Nothing fancy, just a callback and an infinite loop — simple enough to clearly see what’s going on.
-- **`publish.py`** does the opposite: it connects to the broker, publishes a single value to the same topic, and exits. The message can be passed via CLI, which makes it easy to simulate changing sensor values or quick test events.
-
-The whole point of this mini-project is clarity over complexity. One topic, one publisher, one subscriber, no abstractions, no frameworks. You start the broker, run the subscriber, publish a message, and immediately see the result.
-
-Sometimes it’s useful to strip things down to the bare minimum — just to be sure you actually understand how the pieces fit together.
-
----
-
-[https://github.com/fedorzajac/mqtt](https://github.com/fedorzajac/mqtt)
+I believe no additional changes are necessary
