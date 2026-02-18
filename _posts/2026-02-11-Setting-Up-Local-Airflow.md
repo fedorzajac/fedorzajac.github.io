@@ -19,3 +19,7 @@ On the client side, there are two simple Python scripts using `paho-mqtt`.
 The whole point of this mini-project is clarity over complexity. One topic, one publisher, one subscriber, no abstractions, no frameworks. You start the broker, run the subscriber, publish a message, and immediately see the result.
 
 Sometimes it’s useful to strip things down to the bare minimum — just to be sure you actually understand how the pieces fit together.
+
+---
+
+[https://github.com/fedorzajac/mqtt](https://github.com/fedorzajac/mqtt)
