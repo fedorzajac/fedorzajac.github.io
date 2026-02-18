@@ -1,50 +1,21 @@
-
 ---
 layout: post
-title:  "💨 Setting Up Airflow for local development"
+title:  "✉️ Minimal MQTT Demo with Docker and Python"
 date:   2026-02-11 10:05:53 +0100
-categories: airflow python automation
+categories: mqtt python automation
 ---
 
-### Setting up Airflow
+# ✉️ Minimal MQTT Demo with Docker and Python
 
-Basically it is easy to just follow instructions on airflow [website](https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html#docker-compose-env-variables).
+I put together a very small MQTT demo project to refresh the basics and make sure I really understand the moving parts (and not just copy-paste snippets).
 
-```bash
-# fetch docker compose
-curl -LfO 'https://airflow.apache.org/docs/apache-airflow/3.1.7/docker-compose.yaml'
-# init dirs and airflow UID
-mkdir -p ./dags ./logs ./plugins ./config
-echo -e "AIRFLOW_UID=$(id -u)" > .env
-# initialize airflow config
-docker compose run airflow-cli airflow config list
+The setup is intentionally minimal. A Mosquitto broker is started via Docker Compose, so there’s no local installation hassle and the environment is fully reproducible. Once the broker is running, everything else talks to it over `localhost`.
 
-# optional (if you are on linux)
-volumes:
-  - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags:z
-  - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs:z
-  - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config:z
-  - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins:z
-# no need on mac:
-sudo chmod -R 777 ./config
+On the client side, there are two simple Python scripts using `paho-mqtt`.
 
-# and initialize db
-docker compose up airflow-init
+- **`subscribe.py`** acts as a long-running subscriber, listening on a single topic and printing any incoming messages. Nothing fancy, just a callback and an infinite loop — simple enough to clearly see what’s going on.
+- **`publish.py`** does the opposite: it connects to the broker, publishes a single value to the same topic, and exits. The message can be passed via CLI, which makes it easy to simulate changing sensor values or quick test events.
 
-# running:
-docker compose up
-# stopping
-docker compose down --volumes --remove-orphans
-```
-However, this might not be sufficient. You might want to have your own dependencies, so update compose file:
-```yaml
-x-airflow-common:
-  &airflow-common
-    #...
-    _PIP_ADDITIONAL_REQUIREMENTS: 'matplotlib pandas numpy rasterio geopandas'
-    # jwt secret, to the services will communicato to each other
-    AIRFLOW__API_AUTH__JWT_SECRET: '715b414d09ef6791693fbd9668e17323'
-    #...
-```
+The whole point of this mini-project is clarity over complexity. One topic, one publisher, one subscriber, no abstractions, no frameworks. You start the broker, run the subscriber, publish a message, and immediately see the result.
 
-I believe no additional changes are necessary
+Sometimes it’s useful to strip things down to the bare minimum — just to be sure you actually understand how the pieces fit together.
