@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+
+<link rel="stylesheet" href="/css/style.min.fedad2a11a38b50ac0ee408c47b30b4a96f033bf2bad09a9b6303ada6a77d867.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta charset="UTF-8">
+<title>Fedor Zajac</title>
+</head>
+<body>
+
+    <header>
+    <span class="logo">FZ</span>
+
+  <nav>
+    
+    <a href="/">Home</a>
+    
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </nav>
+</header>
+
+    <main id="swup">
+        
+
+<article>
+
+    <h1>🔑 generating keys for github</h1>
+    <p style="color: var(--accent); margin-top: -1rem;">
+        15. 4. 2025
+    </p>
+
+    
+
+    
+
+    <div class="content">
+        <h3 id="generating-keys-for-github">Generating Keys for Github</h3>
+<div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh-keygen -t ed25519 -C <span style="color:#b8bb26">&#34;your_email@example.com&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat ~/.ssh/id_ed25519.pub
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="add-your-key-to-github">Add your key to GitHub</h3>
+<ul>
+<li>Go to <code>GitHub → Settings &gt; SSH and GPG keys</code></li>
+<li>Click <code>New SSH key</code> (Green Button)</li>
+<li>Paste your public key</li>
+<li>Give it a title like &ldquo;whatever&rdquo;</li>
+</ul>
+
+    </div>
+
+</article>
+
+
+    </main>
+
+    <footer>
+  <span class="footer-copy">© 2026  · Built with ❤️ in Hugo</span>
+  <div class="footer-links">
+    <a href="#">rss</a>
+    <a href="#">email</a>
+    <a href="#">github</a>
+  </div>
+</footer>
+
+
+<script>
+const WX = {
+  0:'clear',1:'mostly clear',2:'partly cloudy',3:'overcast',
+  45:'fog',48:'fog',51:'drizzle',53:'drizzle',55:'drizzle',
+  61:'rain',63:'rain',65:'heavy rain',
+  71:'snow',73:'snow',75:'heavy snow',
+  80:'showers',81:'showers',82:'thunderstorm',
+  95:'thunderstorm',96:'thunderstorm',99:'thunderstorm'
+};
+
+const KEY = 'wx_cache';
+const TTL = 10 * 60 * 1000;
+const el  = document.getElementById('wx');
+
+function render(d) {
+  const t    = Math.round(d.current.temperature_2m);
+  const desc = WX[d.current.weathercode] ?? '—';
+  el.textContent = `${t}° · ${desc}`;
+}
+
+const cached = JSON.parse(localStorage.getItem(KEY) || 'null');
+if (cached && Date.now() - cached.ts < TTL) {
+  render(cached.data);
+} else {
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=48.15&longitude=17.11&current=temperature_2m,weathercode&timezone=Europe%2FPrague')
+    .then(r => r.json())
+    .then(d => {
+      localStorage.setItem(KEY, JSON.stringify({ ts: Date.now(), data: d }));
+      render(d);
+    })
+    .catch(() => { el.textContent = '—'; });
+}
+</script>
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+
+<link rel="stylesheet" href="/css/style.min.fedad2a11a38b50ac0ee408c47b30b4a96f033bf2bad09a9b6303ada6a77d867.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta charset="UTF-8">
+<title>Fedor Zajac</title>
+</head>
+<body>
+
+    <header>
+    <span class="logo">FZ</span>
+
+  <nav>
+    
+    <a href="/">Home</a>
+    
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </nav>
+</header>
+
+    <main id="swup">
+        
+
+<article>
+
+    <h1>🤖 OS X Finder Quick Action Open Folder in VS Code</h1>
+    <p style="color: var(--accent); margin-top: -1rem;">
+        12. 2. 2025
+    </p>
+
+    
+
+    
+
+    <div class="content">
+        <h1 id="create-a-finder-quick-action-to-open-folders-in-vs-code-on-macos">Create a Finder Quick Action to Open Folders in VS Code on macOS</h1>
+<p>You can create a Finder Quick Action to open a selected folder in VS Code on macOS using Automator. Here&rsquo;s how:</p>
+<h2 id="steps-to-create-the-quick-action">Steps to Create the Quick Action:</h2>
+<ol>
+<li>
+<p><strong>Open Automator</strong></p>
+<ul>
+<li>Press <code>Cmd + Space</code>, type <strong>Automator</strong>, and open it.</li>
+</ul>
+</li>
+<li>
+<p><strong>Create a New Quick Action</strong></p>
+<ul>
+<li>Click <strong>New Document</strong> → Select <strong>Quick Action</strong> → Click <strong>Choose</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Configure the Quick Action</strong></p>
+<ul>
+<li>At the top, set <strong>&ldquo;Workflow receives current&rdquo;</strong> to <strong>&ldquo;files or folders&rdquo;</strong>.</li>
+<li>Set <strong>&ldquo;in&rdquo;</strong> to <strong>&ldquo;Finder&rdquo;</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Add a &ldquo;Run Shell Script&rdquo; Action</strong></p>
+<ul>
+<li>In the left search bar, type <strong>&ldquo;Run Shell Script&rdquo;</strong> and double-click it to add it to the workflow.</li>
+<li>In the <strong>Shell</strong> dropdown, select <strong>&quot;/bin/zsh&quot;</strong> (or <code>/bin/bash</code> if preferred).</li>
+<li>Set <strong>&ldquo;Pass input&rdquo;</strong> to <strong>&ldquo;as arguments&rdquo;</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Enter the Shell Script</strong></p>
+<div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#fe8019">for</span> f in <span style="color:#b8bb26">&#34;</span>$@<span style="color:#b8bb26">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">do</span>
+</span></span><span style="display:flex;"><span>    open -a <span style="color:#b8bb26">&#34;Visual Studio Code&#34;</span> <span style="color:#b8bb26">&#34;</span>$f<span style="color:#b8bb26">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>Save the Quick Action</strong></p>
+<p>Press <code>Cmd + S</code>, name it <strong>&ldquo;Open in VS Code&rdquo;</strong>, and click Save.</p>
+</li>
+<li>
+<p><strong>Using the Quick Action in Finder</strong></p>
+<p>Right-click a folder in Finder.
+Select Quick Actions → Open in VS Code.</p>
+</li>
+</ol>
+
+    </div>
+
+</article>
+
+
+    </main>
+
+    <footer>
+  <span class="footer-copy">© 2026  · Built with ❤️ in Hugo</span>
+  <div class="footer-links">
+    <a href="#">rss</a>
+    <a href="#">email</a>
+    <a href="#">github</a>
+  </div>
+</footer>
+
+
+<script>
+const WX = {
+  0:'clear',1:'mostly clear',2:'partly cloudy',3:'overcast',
+  45:'fog',48:'fog',51:'drizzle',53:'drizzle',55:'drizzle',
+  61:'rain',63:'rain',65:'heavy rain',
+  71:'snow',73:'snow',75:'heavy snow',
+  80:'showers',81:'showers',82:'thunderstorm',
+  95:'thunderstorm',96:'thunderstorm',99:'thunderstorm'
+};
+
+const KEY = 'wx_cache';
+const TTL = 10 * 60 * 1000;
+const el  = document.getElementById('wx');
+
+function render(d) {
+  const t    = Math.round(d.current.temperature_2m);
+  const desc = WX[d.current.weathercode] ?? '—';
+  el.textContent = `${t}° · ${desc}`;
+}
+
+const cached = JSON.parse(localStorage.getItem(KEY) || 'null');
+if (cached && Date.now() - cached.ts < TTL) {
+  render(cached.data);
+} else {
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=48.15&longitude=17.11&current=temperature_2m,weathercode&timezone=Europe%2FPrague')
+    .then(r => r.json())
+    .then(d => {
+      localStorage.setItem(KEY, JSON.stringify({ ts: Date.now(), data: d }));
+      render(d);
+    })
+    .catch(() => { el.textContent = '—'; });
+}
+</script>
+</body>
+
+</html>

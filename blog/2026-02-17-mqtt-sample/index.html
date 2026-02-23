@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+
+<link rel="stylesheet" href="/css/style.min.fedad2a11a38b50ac0ee408c47b30b4a96f033bf2bad09a9b6303ada6a77d867.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta charset="UTF-8">
+<title>Fedor Zajac</title>
+</head>
+<body>
+
+    <header>
+    <span class="logo">FZ</span>
+
+  <nav>
+    
+    <a href="/">Home</a>
+    
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </nav>
+</header>
+
+    <main id="swup">
+        
+
+<article>
+
+    <h1>✉️ Minimal MQTT Demo with Docker and Python</h1>
+    <p style="color: var(--accent); margin-top: -1rem;">
+        11. 2. 2026
+    </p>
+
+    
+
+    
+
+    <div class="content">
+        <p>First things first, let&rsquo;s start with clear terms</p>
+<table>
+  <thead>
+      <tr>
+          <th>Aspect</th>
+          <th>MQTT</th>
+          <th>Kafka</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Full name</td>
+          <td>Message Queuing Telemetry Transport</td>
+          <td>Apache Kafka</td>
+      </tr>
+      <tr>
+          <td>Main purpose</td>
+          <td>Lightweight messaging</td>
+          <td>Distributed event streaming</td>
+      </tr>
+      <tr>
+          <td>Typical use case</td>
+          <td>IoT, sensors, embedded devices</td>
+          <td>Data pipelines, analytics, microservices</td>
+      </tr>
+      <tr>
+          <td>Communication model</td>
+          <td>Publish / Subscribe</td>
+          <td>Publish / Subscribe (via topics &amp; partitions)</td>
+      </tr>
+      <tr>
+          <td>Message size</td>
+          <td>Very small</td>
+          <td>Small to large</td>
+      </tr>
+      <tr>
+          <td>Message persistence</td>
+          <td>Optional / limited</td>
+          <td>Core feature (durable storage)</td>
+      </tr>
+      <tr>
+          <td>Replay messages</td>
+          <td>No (by default)</td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td>Ordering</td>
+          <td>Best effort</td>
+          <td>Guaranteed within partition</td>
+      </tr>
+      <tr>
+          <td>Scalability focus</td>
+          <td>Large number of devices</td>
+          <td>High event throughput</td>
+      </tr>
+      <tr>
+          <td>Resource usage</td>
+          <td>Very low</td>
+          <td>High</td>
+      </tr>
+      <tr>
+          <td>Network conditions</td>
+          <td>Unreliable, low-bandwidth</td>
+          <td>Reliable, high-bandwidth</td>
+      </tr>
+      <tr>
+          <td>Latency</td>
+          <td>Very low</td>
+          <td>Low to moderate</td>
+      </tr>
+      <tr>
+          <td>Typical consumers</td>
+          <td>Devices, lightweight services</td>
+          <td>Backend services, stream processors</td>
+      </tr>
+  </tbody>
+</table>
+<p>I put together a very small MQTT demo project to refresh the basics and make sure I really understand the moving parts (and not just copy-paste snippets).</p>
+<p>The setup is intentionally minimal. A Mosquitto broker is started via Docker Compose, so there’s no local installation hassle and the environment is fully reproducible. Once the broker is running, everything else talks to it over <code>localhost</code>.</p>
+<p>On the client side, there are two simple Python scripts using <code>paho-mqtt</code>.</p>
+<ul>
+<li><strong><code>subscribe.py</code></strong> acts as a long-running subscriber, listening on a single topic and printing any incoming messages. Nothing fancy, just a callback and an infinite loop — simple enough to clearly see what’s going on.</li>
+<li><strong><code>publish.py</code></strong> does the opposite: it connects to the broker, publishes a single value to the same topic, and exits. The message can be passed via CLI, which makes it easy to simulate changing sensor values or quick test events.</li>
+</ul>
+<p>The whole point of this mini-project is clarity over complexity. One topic, one publisher, one subscriber, no abstractions, no frameworks. You start the broker, run the subscriber, publish a message, and immediately see the result.</p>
+<p>Sometimes it’s useful to strip things down to the bare minimum — just to be sure you actually understand how the pieces fit together.</p>
+<hr>
+<p><a href="https://github.com/fedorzajac/mqtt">https://github.com/fedorzajac/mqtt</a></p>
+
+    </div>
+
+</article>
+
+
+    </main>
+
+    <footer>
+  <span class="footer-copy">© 2026  · Built with ❤️ in Hugo</span>
+  <div class="footer-links">
+    <a href="#">rss</a>
+    <a href="#">email</a>
+    <a href="#">github</a>
+  </div>
+</footer>
+
+
+<script>
+const WX = {
+  0:'clear',1:'mostly clear',2:'partly cloudy',3:'overcast',
+  45:'fog',48:'fog',51:'drizzle',53:'drizzle',55:'drizzle',
+  61:'rain',63:'rain',65:'heavy rain',
+  71:'snow',73:'snow',75:'heavy snow',
+  80:'showers',81:'showers',82:'thunderstorm',
+  95:'thunderstorm',96:'thunderstorm',99:'thunderstorm'
+};
+
+const KEY = 'wx_cache';
+const TTL = 10 * 60 * 1000;
+const el  = document.getElementById('wx');
+
+function render(d) {
+  const t    = Math.round(d.current.temperature_2m);
+  const desc = WX[d.current.weathercode] ?? '—';
+  el.textContent = `${t}° · ${desc}`;
+}
+
+const cached = JSON.parse(localStorage.getItem(KEY) || 'null');
+if (cached && Date.now() - cached.ts < TTL) {
+  render(cached.data);
+} else {
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=48.15&longitude=17.11&current=temperature_2m,weathercode&timezone=Europe%2FPrague')
+    .then(r => r.json())
+    .then(d => {
+      localStorage.setItem(KEY, JSON.stringify({ ts: Date.now(), data: d }));
+      render(d);
+    })
+    .catch(() => { el.textContent = '—'; });
+}
+</script>
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+
+<link rel="stylesheet" href="/css/style.min.fedad2a11a38b50ac0ee408c47b30b4a96f033bf2bad09a9b6303ada6a77d867.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta charset="UTF-8">
+<title>Fedor Zajac</title>
+</head>
+<body>
+
+    <header>
+    <span class="logo">FZ</span>
+
+  <nav>
+    
+    <a href="/">Home</a>
+    
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </nav>
+</header>
+
+    <main id="swup">
+        
+
+<article>
+
+    <h1>🎛️ Setup Vagrant and Virtualbox on almalinux</h1>
+    <p style="color: var(--accent); margin-top: -1rem;">
+        6. 6. 2024
+    </p>
+
+    
+
+    
+
+    <div class="content">
+        <h3 id="setup-vagrant-and-virtualbox-on-almalinux">Setup Vagrant and Virtualbox on almalinux</h3>
+<div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># Install necessary tools</span>
+</span></span><span style="display:flex;"><span>sudo yum install -y yum-utils
+</span></span><span style="display:flex;"><span>sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+</span></span><span style="display:flex;"><span>sudo yum -y install vagrant
+</span></span><span style="display:flex;"><span>sudo yum install docker
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># Create project directory</span>
+</span></span><span style="display:flex;"><span>mkdir -p ~/Documents/projects
+</span></span><span style="display:flex;"><span><span style="color:#fabd2f">cd</span> ~/Documents/projects/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># Initialize Vagrant</span>
+</span></span><span style="display:flex;"><span>vagrant init
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># Install VirtualBox</span>
+</span></span><span style="display:flex;"><span>sudo dnf config-manager --add-repo<span style="color:#fe8019">=</span>https://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo
+</span></span><span style="display:flex;"><span>sudo yum install VirtualBox-7.0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># Add user to libvirt group</span>
+</span></span><span style="display:flex;"><span>sudo usermod -aG libvirt $USER
+</span></span><span style="display:flex;"><span>loginctl terminate-user $USER
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># Start Vagrant</span>
+</span></span><span style="display:flex;"><span>vagrant up
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="additional-info">Additional info</h3>
+<p><a href="https://fishshell.com/docs/current/cmds/history.html">fish</a></p>
+<p><a href="https://fedoraproject.org/cloud/download">fedora images</a></p>
+<p><a href="https://github.com/kodekloudhub/certified-kubernetes-administrator-course/blob/master/kubeadm-clusters/virtualbox/Vagrantfile">Vagrantfile</a></p>
+
+    </div>
+
+</article>
+
+
+    </main>
+
+    <footer>
+  <span class="footer-copy">© 2026  · Built with ❤️ in Hugo</span>
+  <div class="footer-links">
+    <a href="#">rss</a>
+    <a href="#">email</a>
+    <a href="#">github</a>
+  </div>
+</footer>
+
+
+<script>
+const WX = {
+  0:'clear',1:'mostly clear',2:'partly cloudy',3:'overcast',
+  45:'fog',48:'fog',51:'drizzle',53:'drizzle',55:'drizzle',
+  61:'rain',63:'rain',65:'heavy rain',
+  71:'snow',73:'snow',75:'heavy snow',
+  80:'showers',81:'showers',82:'thunderstorm',
+  95:'thunderstorm',96:'thunderstorm',99:'thunderstorm'
+};
+
+const KEY = 'wx_cache';
+const TTL = 10 * 60 * 1000;
+const el  = document.getElementById('wx');
+
+function render(d) {
+  const t    = Math.round(d.current.temperature_2m);
+  const desc = WX[d.current.weathercode] ?? '—';
+  el.textContent = `${t}° · ${desc}`;
+}
+
+const cached = JSON.parse(localStorage.getItem(KEY) || 'null');
+if (cached && Date.now() - cached.ts < TTL) {
+  render(cached.data);
+} else {
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=48.15&longitude=17.11&current=temperature_2m,weathercode&timezone=Europe%2FPrague')
+    .then(r => r.json())
+    .then(d => {
+      localStorage.setItem(KEY, JSON.stringify({ ts: Date.now(), data: d }));
+      render(d);
+    })
+    .catch(() => { el.textContent = '—'; });
+}
+</script>
+</body>
+
+</html>

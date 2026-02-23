@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="generator" content="Hugo 0.155.3"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+
+<link rel="stylesheet" href="/css/style.min.fedad2a11a38b50ac0ee408c47b30b4a96f033bf2bad09a9b6303ada6a77d867.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta charset="UTF-8">
+<title>Fedor Zajac</title>
+</head>
+<body>
+
+    <header>
+    <span class="logo">FZ</span>
+
+  <nav>
+    
+    <a href="/">Home</a>
+    
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </nav>
+</header>
+
+    <main id="swup">
+        
+
+<h1>Fedor Zajac 🥕🧪</h1>
+<small>Experimenting... when time allows it...</small>
+
+
+
+
+
+
+
+<p class="pagination">
+    
+    <span onclick="window.location='\/'"
+        class="dot ">
+    </span>
+    
+    <span onclick="window.location='\/page\/2\/'"
+        class="dot ">
+    </span>
+    
+    <span onclick="window.location='\/page\/3\/'"
+        class="dot ">
+    </span>
+    
+    <span onclick="window.location='\/page\/4\/'"
+        class="dot ">
+    </span>
+    
+    <span onclick="window.location='\/page\/5\/'"
+        class="dot ">
+    </span>
+    
+    <span onclick="window.location='\/page\/6\/'"
+        class="dot ">
+    </span>
+    
+    <span onclick="window.location='\/page\/7\/'"
+        class="dot active">
+    </span>
+    
+</p>
+<br />
+
+<article class="post">
+    <div class="post-date">
+        9. 1. 2024
+    </div>
+    <div class="post-inner">
+        <div class="post-title">
+            <a href="/blog/2024-01-09-welcome-to-jekyll/" style="font-size: 1.3rem; color: var(--fg); text-decoration: none;">
+                🍌 Welcome to Jekyll!
+            </a>
+
+        </div>
+        <div class="post-sub">
+            You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see …
+
+        </div>
+    </div>
+
+</article>
+
+
+
+
+
+<nav style="margin-top: 2rem; display: flex; gap: 1rem;">
+    
+    <a href="/page/6/">←</a>
+    
+
+    
+</nav>
+
+
+
+
+<div class="now">
+    <div class="now-item">
+        <div class="now-key">reading</div>
+        <div class="now-val">Wild Sheep Chase</div>
+    </div>
+    <div class="now-item">
+        <div class="now-key">listening</div>
+        <div class="now-val">OE1</div>
+    </div>
+    <div class="now-item">
+        <div class="now-key">drinking</div>
+        <div class="now-val">gyokuro, 65°</div>
+    </div>
+    <div class="now-item">
+        <div class="now-key">outside</div>
+        <div class="now-val wx" id="wx">—</div>
+    </div>
+</div>
+
+
+    </main>
+
+    <footer>
+  <span class="footer-copy">© 2026  · Built with ❤️ in Hugo</span>
+  <div class="footer-links">
+    <a href="#">rss</a>
+    <a href="#">email</a>
+    <a href="#">github</a>
+  </div>
+</footer>
+
+
+<script>
+const WX = {
+  0:'clear',1:'mostly clear',2:'partly cloudy',3:'overcast',
+  45:'fog',48:'fog',51:'drizzle',53:'drizzle',55:'drizzle',
+  61:'rain',63:'rain',65:'heavy rain',
+  71:'snow',73:'snow',75:'heavy snow',
+  80:'showers',81:'showers',82:'thunderstorm',
+  95:'thunderstorm',96:'thunderstorm',99:'thunderstorm'
+};
+
+const KEY = 'wx_cache';
+const TTL = 10 * 60 * 1000;
+const el  = document.getElementById('wx');
+
+function render(d) {
+  const t    = Math.round(d.current.temperature_2m);
+  const desc = WX[d.current.weathercode] ?? '—';
+  el.textContent = `${t}° · ${desc}`;
+}
+
+const cached = JSON.parse(localStorage.getItem(KEY) || 'null');
+if (cached && Date.now() - cached.ts < TTL) {
+  render(cached.data);
+} else {
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=48.15&longitude=17.11&current=temperature_2m,weathercode&timezone=Europe%2FPrague')
+    .then(r => r.json())
+    .then(d => {
+      localStorage.setItem(KEY, JSON.stringify({ ts: Date.now(), data: d }));
+      render(d);
+    })
+    .catch(() => { el.textContent = '—'; });
+}
+</script>
+</body>
+
+</html>

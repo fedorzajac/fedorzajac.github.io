@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+
+<link rel="stylesheet" href="/css/style.min.fedad2a11a38b50ac0ee408c47b30b4a96f033bf2bad09a9b6303ada6a77d867.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta charset="UTF-8">
+<title>Fedor Zajac</title>
+</head>
+<body>
+
+    <header>
+    <span class="logo">FZ</span>
+
+  <nav>
+    
+    <a href="/">Home</a>
+    
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </nav>
+</header>
+
+    <main id="swup">
+        
+
+<article>
+
+    <h1>🪫 Using debounce with React18 from cdn</h1>
+    <p style="color: var(--accent); margin-top: -1rem;">
+        13. 6. 2024
+    </p>
+
+    
+
+    
+
+    <div class="content">
+        <h3 id="using-debounce-with-react18-from-cdn">Using debounce with React18 from cdn</h3>
+<div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#fb4934">html</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#fb4934">head</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#fb4934">title</span>&gt;React on Website&lt;/<span style="color:#fb4934">title</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#fb4934">head</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#fb4934">body</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#fb4934">div</span> <span style="color:#b8bb26;font-weight:bold">id</span><span style="color:#fe8019">=</span><span style="color:#b8bb26">&#34;app&#34;</span>&gt;&lt;/<span style="color:#fb4934">div</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#fb4934">script</span> <span style="color:#b8bb26;font-weight:bold">type</span><span style="color:#fe8019">=</span><span style="color:#b8bb26">&#34;text/babel&#34;</span> <span style="color:#b8bb26;font-weight:bold">src</span><span style="color:#fe8019">=</span><span style="color:#b8bb26">&#34;/react.js&#34;</span>&gt;&lt;/<span style="color:#fb4934">script</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#fb4934">script</span> <span style="color:#b8bb26;font-weight:bold">src</span><span style="color:#fe8019">=</span><span style="color:#b8bb26">&#34;https://unpkg.com/react@18/umd/react.development.js&#34;</span> <span style="color:#b8bb26;font-weight:bold">crossorigin</span>&gt;&lt;/<span style="color:#fb4934">script</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#fb4934">script</span> <span style="color:#b8bb26;font-weight:bold">src</span><span style="color:#fe8019">=</span><span style="color:#b8bb26">&#34;https://unpkg.com/react-dom@18/umd/react-dom.development.js&#34;</span> <span style="color:#b8bb26;font-weight:bold">crossorigin</span>&gt;&lt;/<span style="color:#fb4934">script</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#fb4934">script</span> <span style="color:#b8bb26;font-weight:bold">src</span><span style="color:#fe8019">=</span><span style="color:#b8bb26">&#34;https://unpkg.com/@babel/standalone/babel.min.js&#34;</span>&gt;&lt;/<span style="color:#fb4934">script</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#fb4934">script</span> <span style="color:#b8bb26;font-weight:bold">src</span><span style="color:#fe8019">=</span><span style="color:#b8bb26">&#34;https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js&#34;</span>&gt;&lt;/<span style="color:#fb4934">script</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#fb4934">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#fb4934">html</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>and react code:</p>
+<div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">64
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#fe8019">const</span> { useState, useEffect, useCallback, useMemo } <span style="color:#fe8019">=</span> React;
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">const</span> { debounce } <span style="color:#fe8019">=</span> _;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">const</span> App <span style="color:#fe8019">=</span> () =&gt; {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">const</span> [query, setQuery] <span style="color:#fe8019">=</span> useState(<span style="color:#b8bb26">&#39;&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">const</span> [results, setResults] <span style="color:#fe8019">=</span> useState([]);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">const</span> [executeDebouncer, setExecuteDebouncer] <span style="color:#fe8019">=</span> useState(<span style="color:#fe8019">false</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">const</span> debounceFetchResults <span style="color:#fe8019">=</span> useCallback(
+</span></span><span style="display:flex;"><span>        debounce(() =&gt; setExecuteDebouncer(<span style="color:#fe8019">true</span>), <span style="color:#d3869b">3000</span>),
+</span></span><span style="display:flex;"><span>        [],
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">const</span> handleChange <span style="color:#fe8019">=</span> (e) =&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">const</span> newQuery <span style="color:#fe8019">=</span> e.target.value;
+</span></span><span style="display:flex;"><span>        console.log(newQuery);
+</span></span><span style="display:flex;"><span>        setQuery(newQuery);
+</span></span><span style="display:flex;"><span>        debounceFetchResults();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">const</span> fetchResults <span style="color:#fe8019">=</span> () =&gt; {
+</span></span><span style="display:flex;"><span>            console.log(<span style="color:#b8bb26">&#39;debouncing...&#39;</span>);
+</span></span><span style="display:flex;"><span>            fetch(<span style="color:#b8bb26">`your url`</span>)
+</span></span><span style="display:flex;"><span>            .then(response =&gt; response.json())
+</span></span><span style="display:flex;"><span>            .then(data =&gt; {
+</span></span><span style="display:flex;"><span>                setResults(data.features);
+</span></span><span style="display:flex;"><span>                console.log(data);
+</span></span><span style="display:flex;"><span>            })
+</span></span><span style="display:flex;"><span>            .<span style="color:#fe8019">catch</span>(error =&gt; {
+</span></span><span style="display:flex;"><span>                console.error(<span style="color:#b8bb26">&#34;Error fetching data&#34;</span>, error);
+</span></span><span style="display:flex;"><span>            });
+</span></span><span style="display:flex;"><span>    }; <span style="color:#928374;font-style:italic">// Debounce time in milliseconds
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    useEffect(() =&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">if</span> (executeDebouncer) {
+</span></span><span style="display:flex;"><span>          setExecuteDebouncer(<span style="color:#fe8019">false</span>);
+</span></span><span style="display:flex;"><span>          fetchResults();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      }, [executeDebouncer]);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> (
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">&lt;</span>React.Fragment<span style="color:#fe8019">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#fe8019">&lt;</span>div<span style="color:#fe8019">&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#fe8019">&lt;</span>input
+</span></span><span style="display:flex;"><span>        type<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#34;text&#34;</span>
+</span></span><span style="display:flex;"><span>        value<span style="color:#fe8019">=</span>{query}
+</span></span><span style="display:flex;"><span>        onChange<span style="color:#fe8019">=</span>{handleChange}
+</span></span><span style="display:flex;"><span>        placeholder<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#34;Search...&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#fe8019">/&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#fe8019">&lt;</span>ul<span style="color:#fe8019">&gt;</span>
+</span></span><span style="display:flex;"><span>        {results.map(result =&gt; (
+</span></span><span style="display:flex;"><span>          <span style="color:#fe8019">&lt;</span>li key<span style="color:#fe8019">=</span>{result.properties.osm_id <span style="color:#fe8019">+</span> <span style="color:#fabd2f">Math</span>.random(<span style="color:#d3869b">1000</span>)}<span style="color:#fe8019">&gt;</span>
+</span></span><span style="display:flex;"><span>           ...
+</span></span><span style="display:flex;"><span>          <span style="color:#fe8019">&lt;</span>/li&gt;
+</span></span><span style="display:flex;"><span>        ))}
+</span></span><span style="display:flex;"><span>      <span style="color:#fe8019">&lt;</span>/ul&gt;
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">&lt;</span>/div&gt;
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">&lt;</span>/React.Fragment&gt;
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">let</span> domContainer <span style="color:#fe8019">=</span> <span style="color:#fabd2f">document</span>.querySelector(<span style="color:#b8bb26">&#39;#app&#39;</span>);
+</span></span><span style="display:flex;"><span>ReactDOM.render(<span style="color:#fe8019">&lt;</span>App <span style="color:#fe8019">/&gt;</span>, domContainer);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<p><a href="https://stackoverflow.com/questions/70501416/debug-usecallback-with-debouncer-resets-usestate-variables">https://stackoverflow.com/questions/70501416/debug-usecallback-with-debouncer-resets-usestate-variables</a></p>
+
+    </div>
+
+</article>
+
+
+    </main>
+
+    <footer>
+  <span class="footer-copy">© 2026  · Built with ❤️ in Hugo</span>
+  <div class="footer-links">
+    <a href="#">rss</a>
+    <a href="#">email</a>
+    <a href="#">github</a>
+  </div>
+</footer>
+
+
+<script>
+const WX = {
+  0:'clear',1:'mostly clear',2:'partly cloudy',3:'overcast',
+  45:'fog',48:'fog',51:'drizzle',53:'drizzle',55:'drizzle',
+  61:'rain',63:'rain',65:'heavy rain',
+  71:'snow',73:'snow',75:'heavy snow',
+  80:'showers',81:'showers',82:'thunderstorm',
+  95:'thunderstorm',96:'thunderstorm',99:'thunderstorm'
+};
+
+const KEY = 'wx_cache';
+const TTL = 10 * 60 * 1000;
+const el  = document.getElementById('wx');
+
+function render(d) {
+  const t    = Math.round(d.current.temperature_2m);
+  const desc = WX[d.current.weathercode] ?? '—';
+  el.textContent = `${t}° · ${desc}`;
+}
+
+const cached = JSON.parse(localStorage.getItem(KEY) || 'null');
+if (cached && Date.now() - cached.ts < TTL) {
+  render(cached.data);
+} else {
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=48.15&longitude=17.11&current=temperature_2m,weathercode&timezone=Europe%2FPrague')
+    .then(r => r.json())
+    .then(d => {
+      localStorage.setItem(KEY, JSON.stringify({ ts: Date.now(), data: d }));
+      render(d);
+    })
+    .catch(() => { el.textContent = '—'; });
+}
+</script>
+</body>
+
+</html>

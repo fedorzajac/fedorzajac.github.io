@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+
+<link rel="stylesheet" href="/css/style.min.fedad2a11a38b50ac0ee408c47b30b4a96f033bf2bad09a9b6303ada6a77d867.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta charset="UTF-8">
+<title>Fedor Zajac</title>
+</head>
+<body>
+
+    <header>
+    <span class="logo">FZ</span>
+
+  <nav>
+    
+    <a href="/">Home</a>
+    
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </nav>
+</header>
+
+    <main id="swup">
+        
+  <main>
+    <h1>Blogs</h1>
+    <ul>
+      
+        <li>
+          <a href="/blog/2026-02-20-iot-esp32/">🕸️ Internet of Things: ESP32, MicroPython</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2026-02-17-mqtt-sample/">✉️ Minimal MQTT Demo with Docker and Python</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2026-02-11/2026-02-11-setting-up-local-airflow/">💨 Setting Up Airflow for local development</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2026-01-22/2026-01-22-python-physics-math-data/">⏱️ Measuring Muon Decay Time</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2026-01-06-raspberry-pi-and-gps-module/">🧭 Fun with Raspberry pi and GPS module</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2025-04-14-generating-keys-for-github/">🔑 generating keys for github</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2025-03-22-golang-https-server/">🥤 golang https server</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2025-02-12-os-x-finder-quick-action-open-folder-in-vs-code/">🤖 OS X Finder Quick Action Open Folder in VS Code</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2024-11-05-useful-bash-commands/">🔧 Useful bash commands</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2024-09-22-songs-for-guitar-lessons/">🎸 Songs for Guitar Lessons</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2024-06-13-using-debounce-with-react18-from-cdn/">🪫 Using debounce with React18 from cdn</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2024-06-06-setup-vagrant-and-virtualbox-on-almalinux/">🎛️ Setup Vagrant and Virtualbox on almalinux</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2024-05-08-setup-github-primer-with-rails/">🐙 Setup Github Primer Design with Rails</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2024-02-18-rails-app-postgres-m1/">🎲 Run Rails7 app with ssl certificate</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2024-02-17/2024-02-17-generating-certificates/">🥭 Generating certificate files</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2024-01-12-rails-app-mongoid-rspec/">🚅 Rails7 Setup with Mongoid and RSpec</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2024-01-11-simple-golang-jisho-parsing/">⚗️ Parsing Jisho API with Golang</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2024-01-10-python-torch-fedora-39/">🪔 Python 3.11 and torch on fedora 39</a>
+        </li>
+      
+        <li>
+          <a href="/blog/2024-01-09-welcome-to-jekyll/">🍌 Welcome to Jekyll!</a>
+        </li>
+      
+    </ul>
+  </main>
+
+    </main>
+
+    <footer>
+  <span class="footer-copy">© 2026  · Built with ❤️ in Hugo</span>
+  <div class="footer-links">
+    <a href="#">rss</a>
+    <a href="#">email</a>
+    <a href="#">github</a>
+  </div>
+</footer>
+
+
+<script>
+const WX = {
+  0:'clear',1:'mostly clear',2:'partly cloudy',3:'overcast',
+  45:'fog',48:'fog',51:'drizzle',53:'drizzle',55:'drizzle',
+  61:'rain',63:'rain',65:'heavy rain',
+  71:'snow',73:'snow',75:'heavy snow',
+  80:'showers',81:'showers',82:'thunderstorm',
+  95:'thunderstorm',96:'thunderstorm',99:'thunderstorm'
+};
+
+const KEY = 'wx_cache';
+const TTL = 10 * 60 * 1000;
+const el  = document.getElementById('wx');
+
+function render(d) {
+  const t    = Math.round(d.current.temperature_2m);
+  const desc = WX[d.current.weathercode] ?? '—';
+  el.textContent = `${t}° · ${desc}`;
+}
+
+const cached = JSON.parse(localStorage.getItem(KEY) || 'null');
+if (cached && Date.now() - cached.ts < TTL) {
+  render(cached.data);
+} else {
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=48.15&longitude=17.11&current=temperature_2m,weathercode&timezone=Europe%2FPrague')
+    .then(r => r.json())
+    .then(d => {
+      localStorage.setItem(KEY, JSON.stringify({ ts: Date.now(), data: d }));
+      render(d);
+    })
+    .catch(() => { el.textContent = '—'; });
+}
+</script>
+</body>
+
+</html>

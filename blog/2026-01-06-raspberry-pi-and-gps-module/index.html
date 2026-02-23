@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+
+<link rel="stylesheet" href="/css/style.min.fedad2a11a38b50ac0ee408c47b30b4a96f033bf2bad09a9b6303ada6a77d867.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta charset="UTF-8">
+<title>Fedor Zajac</title>
+</head>
+<body>
+
+    <header>
+    <span class="logo">FZ</span>
+
+  <nav>
+    
+    <a href="/">Home</a>
+    
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </nav>
+</header>
+
+    <main id="swup">
+        
+
+<article>
+
+    <h1>🧭 Fun with Raspberry pi and GPS module</h1>
+    <p style="color: var(--accent); margin-top: -1rem;">
+        6. 1. 2026
+    </p>
+
+    
+
+    
+
+    <div class="content">
+        <h3 id="fun-with-raspberry-pi-and-gps-module">Fun with Raspberry pi and GPS module</h3>
+<p>Orginal idea was to plot lake bottom depth. So I started with GPS. Later, I will add the ultrasonic distance sensor.</p>
+<ul>
+<li>GPS module micro USB NEO-6M NEO-7M NEO-8M satellite positioning 51 single-chip</li>
+</ul>
+<p>There’s something oddly satisfying about connecting a tiny Raspberry Pi to the real world. Sensors, wires, serial ports — suddenly this little board isn’t just running Python scripts, it’s listening to satellites orbiting thousands of kilometers above us.</p>
+<p>Recently I put together a small script to read GPS NMEA sentences directly from /dev/serial0 on a Raspberry Pi. It’s a minimal project, but it felt like opening a window into the invisible infrastructure that guides ships, planes, and pretty much every smartphone on Earth.</p>
+<p>I wanted a lightweight way to grab live latitude and longitude from a GPS module without any heavy libraries or frameworks. Just raw serial data, a bit of parsing, and a clean printout of coordinates.</p>
+<p>It’s the kind of project that reminds me why I enjoy tinkering with hardware — you write a few lines of Python, and suddenly you’re holding real‑time geolocation data in your hands.</p>
+<h3 id="code-explanation">Code Explanation</h3>
+<p>The script opens a serial connection to the GPS module, listens for NMEA GPGLL messages, and converts the coordinates from the GPS‑specific degrees‑minutes format into standard decimal degrees.</p>
+<p>Here’s the core idea:</p>
+<ul>
+<li>Open /dev/serial0 at 9600 baud</li>
+<li>Read incoming NMEA lines</li>
+<li>Look for $GPGLL sentences (latitude/longitude)</li>
+<li>Convert the GPS format (DDMM.MMMM) into decimal degrees</li>
+<li>Print the coordinates when the GPS reports a valid fix</li>
+</ul>
+<div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">41
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#fe8019">import</span> serial
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ser <span style="color:#fe8019">=</span> serial<span style="color:#fe8019">.</span>Serial(<span style="color:#b8bb26">&#34;/dev/serial0&#34;</span>, <span style="color:#d3869b">9600</span>, timeout<span style="color:#fe8019">=</span><span style="color:#d3869b">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">dm_to_deg</span>(dm, hemi):
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">if</span> <span style="color:#fe8019">not</span> dm:
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">return</span> <span style="color:#fe8019">None</span>
+</span></span><span style="display:flex;"><span>    d <span style="color:#fe8019">=</span> <span style="color:#fabd2f">int</span>(<span style="color:#fabd2f">float</span>(dm) <span style="color:#fe8019">/</span> <span style="color:#d3869b">100</span>)
+</span></span><span style="display:flex;"><span>    m <span style="color:#fe8019">=</span> <span style="color:#fabd2f">float</span>(dm) <span style="color:#fe8019">-</span> d <span style="color:#fe8019">*</span> <span style="color:#d3869b">100</span>
+</span></span><span style="display:flex;"><span>    deg <span style="color:#fe8019">=</span> d <span style="color:#fe8019">+</span> m <span style="color:#fe8019">/</span> <span style="color:#d3869b">60</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> <span style="color:#fe8019">-</span>deg <span style="color:#fe8019">if</span> hemi <span style="color:#fe8019">in</span> (<span style="color:#b8bb26">&#34;S&#34;</span>, <span style="color:#b8bb26">&#34;W&#34;</span>) <span style="color:#fe8019">else</span> deg
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">while</span> <span style="color:#fe8019">True</span>:
+</span></span><span style="display:flex;"><span>    line <span style="color:#fe8019">=</span> ser<span style="color:#fe8019">.</span>readline()<span style="color:#fe8019">.</span>decode(<span style="color:#b8bb26">&#34;ascii&#34;</span>, errors<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#34;ignore&#34;</span>)<span style="color:#fe8019">.</span>strip()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">if</span> <span style="color:#fe8019">not</span> line<span style="color:#fe8019">.</span>startswith(<span style="color:#b8bb26">&#34;$&#34;</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    parts <span style="color:#fe8019">=</span> line<span style="color:#fe8019">.</span>split(<span style="color:#b8bb26">&#34;,&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># --- GLL: position ---</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">if</span> parts[<span style="color:#d3869b">0</span>] <span style="color:#fe8019">==</span> <span style="color:#b8bb26">&#34;$GPGLL&#34;</span>:
+</span></span><span style="display:flex;"><span>        status <span style="color:#fe8019">=</span> parts[<span style="color:#d3869b">6</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">if</span> status <span style="color:#fe8019">==</span> <span style="color:#b8bb26">&#34;A&#34;</span>:   <span style="color:#928374;font-style:italic"># A = valid</span>
+</span></span><span style="display:flex;"><span>            lat <span style="color:#fe8019">=</span> dm_to_deg(parts[<span style="color:#d3869b">1</span>], parts[<span style="color:#d3869b">2</span>])
+</span></span><span style="display:flex;"><span>            lon <span style="color:#fe8019">=</span> dm_to_deg(parts[<span style="color:#d3869b">3</span>], parts[<span style="color:#d3869b">4</span>])
+</span></span><span style="display:flex;"><span>            time_utc <span style="color:#fe8019">=</span> parts[<span style="color:#d3869b">5</span>]
+</span></span><span style="display:flex;"><span>            <span style="color:#fabd2f">print</span>(<span style="color:#b8bb26">f</span><span style="color:#b8bb26">&#34;GLL FIX: </span><span style="color:#b8bb26">{</span>lat<span style="color:#b8bb26">:</span><span style="color:#b8bb26">.6f</span><span style="color:#b8bb26">}</span><span style="color:#b8bb26">, </span><span style="color:#b8bb26">{</span>lon<span style="color:#b8bb26">:</span><span style="color:#b8bb26">.6f</span><span style="color:#b8bb26">}</span><span style="color:#b8bb26"> @ </span><span style="color:#b8bb26">{</span>time_utc<span style="color:#b8bb26">}</span><span style="color:#b8bb26">&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">else</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#fabd2f">print</span>(<span style="color:#b8bb26">&#34;GLL: no fix&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># --- GSA: fix mode &amp; DOP ---</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">elif</span> parts[<span style="color:#d3869b">0</span>] <span style="color:#fe8019">==</span> <span style="color:#b8bb26">&#34;$GPGSA&#34;</span>:
+</span></span><span style="display:flex;"><span>        fix <span style="color:#fe8019">=</span> parts[<span style="color:#d3869b">2</span>]   <span style="color:#928374;font-style:italic"># 1=no fix, 2=2D, 3=3D</span>
+</span></span><span style="display:flex;"><span>        pdop, hdop, vdop <span style="color:#fe8019">=</span> parts[<span style="color:#fe8019">-</span><span style="color:#d3869b">3</span>:]
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">print</span>(<span style="color:#b8bb26">f</span><span style="color:#b8bb26">&#34;GSA: fix=</span><span style="color:#b8bb26">{</span>fix<span style="color:#b8bb26">}</span><span style="color:#b8bb26">, PDOP=</span><span style="color:#b8bb26">{</span>pdop<span style="color:#b8bb26">}</span><span style="color:#b8bb26">, HDOP=</span><span style="color:#b8bb26">{</span>hdop<span style="color:#b8bb26">}</span><span style="color:#b8bb26">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># --- GSV: satellites ---</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">elif</span> parts[<span style="color:#d3869b">0</span>] <span style="color:#fe8019">==</span> <span style="color:#b8bb26">&#34;$GPGSV&#34;</span>:
+</span></span><span style="display:flex;"><span>        sats_in_view <span style="color:#fe8019">=</span> parts[<span style="color:#d3869b">3</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">print</span>(<span style="color:#b8bb26">f</span><span style="color:#b8bb26">&#34;GSV: satellites in view = </span><span style="color:#b8bb26">{</span>sats_in_view<span style="color:#b8bb26">}</span><span style="color:#b8bb26">&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+</article>
+
+
+    </main>
+
+    <footer>
+  <span class="footer-copy">© 2026  · Built with ❤️ in Hugo</span>
+  <div class="footer-links">
+    <a href="#">rss</a>
+    <a href="#">email</a>
+    <a href="#">github</a>
+  </div>
+</footer>
+
+
+<script>
+const WX = {
+  0:'clear',1:'mostly clear',2:'partly cloudy',3:'overcast',
+  45:'fog',48:'fog',51:'drizzle',53:'drizzle',55:'drizzle',
+  61:'rain',63:'rain',65:'heavy rain',
+  71:'snow',73:'snow',75:'heavy snow',
+  80:'showers',81:'showers',82:'thunderstorm',
+  95:'thunderstorm',96:'thunderstorm',99:'thunderstorm'
+};
+
+const KEY = 'wx_cache';
+const TTL = 10 * 60 * 1000;
+const el  = document.getElementById('wx');
+
+function render(d) {
+  const t    = Math.round(d.current.temperature_2m);
+  const desc = WX[d.current.weathercode] ?? '—';
+  el.textContent = `${t}° · ${desc}`;
+}
+
+const cached = JSON.parse(localStorage.getItem(KEY) || 'null');
+if (cached && Date.now() - cached.ts < TTL) {
+  render(cached.data);
+} else {
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=48.15&longitude=17.11&current=temperature_2m,weathercode&timezone=Europe%2FPrague')
+    .then(r => r.json())
+    .then(d => {
+      localStorage.setItem(KEY, JSON.stringify({ ts: Date.now(), data: d }));
+      render(d);
+    })
+    .catch(() => { el.textContent = '—'; });
+}
+</script>
+</body>
+
+</html>

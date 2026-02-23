@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+
+<link rel="stylesheet" href="/css/style.min.fedad2a11a38b50ac0ee408c47b30b4a96f033bf2bad09a9b6303ada6a77d867.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta charset="UTF-8">
+<title>Fedor Zajac</title>
+</head>
+<body>
+
+    <header>
+    <span class="logo">FZ</span>
+
+  <nav>
+    
+    <a href="/">Home</a>
+    
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </nav>
+</header>
+
+    <main id="swup">
+        
+
+<article>
+
+    <h1>⏱️ Measuring Muon Decay Time</h1>
+    <p style="color: var(--accent); margin-top: -1rem;">
+        22. 1. 2026
+    </p>
+
+    
+
+    
+
+    <div class="content">
+        <h3 id="measuring-muon-decay-time">Measuring Muon Decay Time</h3>
+<p>I recently put together a small Kaggle notebook exploring muon decay time. It’s a simple project, but one I really enjoyed. Muons are short‑lived cosmic particles, and watching an exponential decay curve emerge from real timing data feels almost magical.</p>
+<p>The notebook isn’t meant to be groundbreaking—just a personal experiment where I load the data, clean it, plot the decay, and estimate the muon lifetime. Still, it reminded me why I love physics: even tiny particles can reveal big truths about how the universe works.</p>
+<h4 id="results">Results:</h4>
+<ul>
+<li>Tau = 2.1693 ± 0.1932 µs</li>
+<li>Estimated tau uncertainty ≈ 0.0356 µs (tau/√N)</li>
+</ul>
+<h3 id="code-description">Code Description</h3>
+<p>The code loads raw muon timing data from a CSV file and searches each waveform for negative pulses (values below –0.05), which indicate particle detection events. For every waveform, it groups consecutive pulse indices into blocks. If exactly two pulse blocks are found, it interprets them as two muon‑related signals and computes the time difference between them using the sampling rate (8 ns per sample). These time differences are converted to microseconds and collected.</p>
+<p>Next, the code builds a histogram of all measured decay times and estimates the background noise by looking at long times (&gt; 8 μs), where real muon decays are rare. It subtracts this background from the histogram and removes empty bins.</p>
+<p>To extract the muon lifetime, it takes the logarithm of the corrected counts and performs a linear fit. The slope of this line gives the decay constant, from which the muon lifetime τ and its uncertainty are calculated. Finally, it prints both the fitted τ and a simple statistical estimate of its uncertainty.</p>
+<div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">43
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#fe8019">import</span> pandas <span style="color:#fe8019">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> numpy <span style="color:#fe8019">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> matplotlib.pyplot <span style="color:#fe8019">as</span> plt
+</span></span><span style="display:flex;"><span>rows <span style="color:#fe8019">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">with</span> <span style="color:#fabd2f">open</span>(<span style="color:#b8bb26">&#34;/kaggle/input/muon-timing/muon_timing_data.csv&#34;</span>) <span style="color:#fe8019">as</span> f:
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">for</span> line <span style="color:#fe8019">in</span> f:
+</span></span><span style="display:flex;"><span>        line <span style="color:#fe8019">=</span> line<span style="color:#fe8019">.</span>strip()
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">if</span> <span style="color:#fe8019">not</span> line:
+</span></span><span style="display:flex;"><span>            <span style="color:#fe8019">continue</span>
+</span></span><span style="display:flex;"><span>        info, index, <span style="color:#fe8019">*</span>waveform <span style="color:#fe8019">=</span> line<span style="color:#fe8019">.</span>strip()<span style="color:#fe8019">.</span>split(<span style="color:#b8bb26">&#34;,&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#928374;font-style:italic"># print(data)</span>
+</span></span><span style="display:flex;"><span>        waveform <span style="color:#fe8019">=</span> [<span style="color:#fabd2f">float</span>(v) <span style="color:#fe8019">for</span> v <span style="color:#fe8019">in</span> waveform <span style="color:#fe8019">if</span> v<span style="color:#fe8019">.</span>strip() <span style="color:#fe8019">!=</span> <span style="color:#b8bb26">&#34;&#34;</span>]
+</span></span><span style="display:flex;"><span>        pulses <span style="color:#fe8019">=</span> [i <span style="color:#fe8019">for</span> i, v <span style="color:#fe8019">in</span> <span style="color:#fabd2f">enumerate</span>(waveform) <span style="color:#fe8019">if</span> v <span style="color:#fe8019">&lt;</span> <span style="color:#fe8019">-</span><span style="color:#d3869b">0.05</span>]
+</span></span><span style="display:flex;"><span>        rows<span style="color:#fe8019">.</span>append(pulses)
+</span></span><span style="display:flex;"><span>df <span style="color:#fe8019">=</span> pd<span style="color:#fe8019">.</span>DataFrame(rows)
+</span></span><span style="display:flex;"><span>dt_samples <span style="color:#fe8019">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">for</span> index, pulses <span style="color:#fe8019">in</span> df<span style="color:#fe8019">.</span>iterrows():
+</span></span><span style="display:flex;"><span>    pulse_indices <span style="color:#fe8019">=</span> [<span style="color:#fabd2f">int</span>(x) <span style="color:#fe8019">for</span> x <span style="color:#fe8019">in</span> pulses<span style="color:#fe8019">.</span>dropna()]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">if</span> <span style="color:#fe8019">not</span> pulse_indices: <span style="color:#928374;font-style:italic"># when you have [] empty data, just skip it</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    blocks <span style="color:#fe8019">=</span> []
+</span></span><span style="display:flex;"><span>    current <span style="color:#fe8019">=</span> [pulse_indices[<span style="color:#d3869b">0</span>]]
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">for</span> i <span style="color:#fe8019">in</span> <span style="color:#fabd2f">range</span>(<span style="color:#d3869b">1</span>, <span style="color:#fabd2f">len</span>(pulse_indices)):
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">if</span> pulse_indices[i] <span style="color:#fe8019">==</span> pulse_indices[i<span style="color:#fe8019">-</span><span style="color:#d3869b">1</span>] <span style="color:#fe8019">+</span> <span style="color:#d3869b">1</span>:
+</span></span><span style="display:flex;"><span>            current<span style="color:#fe8019">.</span>append(pulse_indices[i])
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">else</span>:
+</span></span><span style="display:flex;"><span>            blocks<span style="color:#fe8019">.</span>append(current)
+</span></span><span style="display:flex;"><span>            current <span style="color:#fe8019">=</span> [pulse_indices[i]]
+</span></span><span style="display:flex;"><span>    blocks<span style="color:#fe8019">.</span>append(current)
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">if</span> <span style="color:#fabd2f">len</span>(blocks) <span style="color:#fe8019">==</span> <span style="color:#d3869b">2</span>:
+</span></span><span style="display:flex;"><span>        delta_time <span style="color:#fe8019">=</span> (blocks[<span style="color:#d3869b">1</span>][<span style="color:#d3869b">0</span>] <span style="color:#fe8019">-</span> blocks[<span style="color:#d3869b">0</span>][<span style="color:#d3869b">0</span>]) <span style="color:#fe8019">*</span> <span style="color:#d3869b">8</span> <span style="color:#928374;font-style:italic"># 125MS/s -&gt; 8ns sampling rate</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#928374;font-style:italic"># print(&#34;delta_time = &#34;, delta_time)</span>
+</span></span><span style="display:flex;"><span>        dt_samples<span style="color:#fe8019">.</span>append(delta_time)
+</span></span><span style="display:flex;"><span>        dt_us <span style="color:#fe8019">=</span> [x <span style="color:#fe8019">*</span> <span style="color:#d3869b">0.001</span> <span style="color:#fe8019">for</span> x <span style="color:#fe8019">in</span> dt_samples] <span style="color:#928374;font-style:italic"># to get microseconds</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#fe8019">.</span>hist(dt_us, bins<span style="color:#fe8019">=</span><span style="color:#d3869b">100</span>)
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># plt.errorbar(bin_centers, counts, yerr=sigma_counts, fmt=&#39;o&#39;, markersize=3, capsize=3, color=&#39;red&#39;, label=&#34;√N errors&#34;)</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#fe8019">.</span>xlabel(<span style="color:#b8bb26">&#34;dt (us)&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#fe8019">.</span>ylabel(<span style="color:#b8bb26">&#34;Counts&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#fe8019">.</span>show()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/assets/img/muon.png" alt="description"></p>
+<div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">44
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># 2) Histogram (reasonable number of bins)</span>
+</span></span><span style="display:flex;"><span>bins <span style="color:#fe8019">=</span> <span style="color:#d3869b">40</span>
+</span></span><span style="display:flex;"><span>counts, bin_edges <span style="color:#fe8019">=</span> np<span style="color:#fe8019">.</span>histogram(dt_us, bins<span style="color:#fe8019">=</span>bins)
+</span></span><span style="display:flex;"><span>bin_centers <span style="color:#fe8019">=</span> <span style="color:#d3869b">0.5</span> <span style="color:#fe8019">*</span> (bin_edges[:<span style="color:#fe8019">-</span><span style="color:#d3869b">1</span>] <span style="color:#fe8019">+</span> bin_edges[<span style="color:#d3869b">1</span>:])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># 3) Poisson errors</span>
+</span></span><span style="display:flex;"><span>sigma_counts <span style="color:#fe8019">=</span> np<span style="color:#fe8019">.</span>sqrt(counts)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># 4 cleaning</span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># Selecting a time window where muons practically no longer exist</span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># e.g. &gt; 8 microseconds</span>
+</span></span><span style="display:flex;"><span>background_region <span style="color:#fe8019">=</span> bin_centers <span style="color:#fe8019">&gt;</span> <span style="color:#d3869b">8.0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># Average number of events in this region = background noise</span>
+</span></span><span style="display:flex;"><span>background_level <span style="color:#fe8019">=</span> np<span style="color:#fe8019">.</span>mean(counts[background_region])
+</span></span><span style="display:flex;"><span><span style="color:#fabd2f">print</span>(<span style="color:#b8bb26">&#34;Background level =&#34;</span>, background_level)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># get rid of bg noise</span>
+</span></span><span style="display:flex;"><span>counts_corr <span style="color:#fe8019">=</span> counts <span style="color:#fe8019">-</span> background_level
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># Replace negative values with zero</span>
+</span></span><span style="display:flex;"><span>counts_corr[counts_corr <span style="color:#fe8019">&lt;</span> <span style="color:#d3869b">0</span>] <span style="color:#fe8019">=</span> <span style="color:#d3869b">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># 5) Prepare data for fitting (remove bins with N=0)</span>
+</span></span><span style="display:flex;"><span>mask <span style="color:#fe8019">=</span> counts_corr <span style="color:#fe8019">&gt;</span> <span style="color:#d3869b">0</span>
+</span></span><span style="display:flex;"><span>t_fit <span style="color:#fe8019">=</span> bin_centers[mask]
+</span></span><span style="display:flex;"><span>N_fit <span style="color:#fe8019">=</span> counts_corr[mask]
+</span></span><span style="display:flex;"><span>y <span style="color:#fe8019">=</span> np<span style="color:#fe8019">.</span>log(N_fit)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># 6) Linear fit of the logarithm</span>
+</span></span><span style="display:flex;"><span>p, cov <span style="color:#fe8019">=</span> np<span style="color:#fe8019">.</span>polyfit(t_fit, y, <span style="color:#d3869b">1</span>, cov<span style="color:#fe8019">=</span><span style="color:#fe8019">True</span>)
+</span></span><span style="display:flex;"><span>m <span style="color:#fe8019">=</span> p[<span style="color:#d3869b">0</span>]     <span style="color:#928374;font-style:italic"># slope</span>
+</span></span><span style="display:flex;"><span>a <span style="color:#fe8019">=</span> p[<span style="color:#d3869b">1</span>]     <span style="color:#928374;font-style:italic"># intercept</span>
+</span></span><span style="display:flex;"><span>sigma_m <span style="color:#fe8019">=</span> np<span style="color:#fe8019">.</span>sqrt(cov[<span style="color:#d3869b">0</span>, <span style="color:#d3869b">0</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># 7) Compute tau and its uncertainty</span>
+</span></span><span style="display:flex;"><span>tau <span style="color:#fe8019">=</span> <span style="color:#fe8019">-</span><span style="color:#d3869b">1.0</span> <span style="color:#fe8019">/</span> m
+</span></span><span style="display:flex;"><span>sigma_tau <span style="color:#fe8019">=</span> sigma_m <span style="color:#fe8019">/</span> (m<span style="color:#fe8019">**</span><span style="color:#d3869b">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fabd2f">print</span>(<span style="color:#b8bb26">f</span><span style="color:#b8bb26">&#34;Tau = </span><span style="color:#b8bb26">{</span>tau<span style="color:#b8bb26">:</span><span style="color:#b8bb26">.4f</span><span style="color:#b8bb26">}</span><span style="color:#b8bb26"> ± </span><span style="color:#b8bb26">{</span>sigma_tau<span style="color:#b8bb26">:</span><span style="color:#b8bb26">.4f</span><span style="color:#b8bb26">}</span><span style="color:#b8bb26"> µs&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># 8) Simple estimate of tau uncertainty ~ tau/sqrt(N)</span>
+</span></span><span style="display:flex;"><span>N_events <span style="color:#fe8019">=</span> <span style="color:#fabd2f">len</span>(dt_us)
+</span></span><span style="display:flex;"><span>sigma_tau_est <span style="color:#fe8019">=</span> tau <span style="color:#fe8019">/</span> np<span style="color:#fe8019">.</span>sqrt(N_events)
+</span></span><span style="display:flex;"><span><span style="color:#fabd2f">print</span>(<span style="color:#b8bb26">f</span><span style="color:#b8bb26">&#34;Estimated tau uncertainty ≈ </span><span style="color:#b8bb26">{</span>sigma_tau_est<span style="color:#b8bb26">:</span><span style="color:#b8bb26">.4f</span><span style="color:#b8bb26">}</span><span style="color:#b8bb26"> µs (tau/√N)&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><a href="https://www.kaggle.com/code/fedorzajac/muon-decay">Code on Kaggle</a></li>
+<li><a href="https://ciiec.buap.mx/Muon-Decay-Real-Data/">Original Data Source</a></li>
+</ul>
+
+    </div>
+
+</article>
+
+
+    </main>
+
+    <footer>
+  <span class="footer-copy">© 2026  · Built with ❤️ in Hugo</span>
+  <div class="footer-links">
+    <a href="#">rss</a>
+    <a href="#">email</a>
+    <a href="#">github</a>
+  </div>
+</footer>
+
+
+<script>
+const WX = {
+  0:'clear',1:'mostly clear',2:'partly cloudy',3:'overcast',
+  45:'fog',48:'fog',51:'drizzle',53:'drizzle',55:'drizzle',
+  61:'rain',63:'rain',65:'heavy rain',
+  71:'snow',73:'snow',75:'heavy snow',
+  80:'showers',81:'showers',82:'thunderstorm',
+  95:'thunderstorm',96:'thunderstorm',99:'thunderstorm'
+};
+
+const KEY = 'wx_cache';
+const TTL = 10 * 60 * 1000;
+const el  = document.getElementById('wx');
+
+function render(d) {
+  const t    = Math.round(d.current.temperature_2m);
+  const desc = WX[d.current.weathercode] ?? '—';
+  el.textContent = `${t}° · ${desc}`;
+}
+
+const cached = JSON.parse(localStorage.getItem(KEY) || 'null');
+if (cached && Date.now() - cached.ts < TTL) {
+  render(cached.data);
+} else {
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=48.15&longitude=17.11&current=temperature_2m,weathercode&timezone=Europe%2FPrague')
+    .then(r => r.json())
+    .then(d => {
+      localStorage.setItem(KEY, JSON.stringify({ ts: Date.now(), data: d }));
+      render(d);
+    })
+    .catch(() => { el.textContent = '—'; });
+}
+</script>
+</body>
+
+</html>

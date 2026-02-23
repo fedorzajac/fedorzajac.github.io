@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+
+<link rel="stylesheet" href="/css/style.min.fedad2a11a38b50ac0ee408c47b30b4a96f033bf2bad09a9b6303ada6a77d867.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta charset="UTF-8">
+<title>Fedor Zajac</title>
+</head>
+<body>
+
+    <header>
+    <span class="logo">FZ</span>
+
+  <nav>
+    
+    <a href="/">Home</a>
+    
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </nav>
+</header>
+
+    <main id="swup">
+        
+
+<article>
+
+    <h1>🎸 Songs for Guitar Lessons</h1>
+    <p style="color: var(--accent); margin-top: -1rem;">
+        22. 9. 2024
+    </p>
+
+    
+
+    
+
+    <div class="content">
+        <h3 id="song-list">Song List</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Title</th>
+          <th>URL</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>ovecka</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+      <tr>
+          <td>prisli sme ta vzyvat</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+      <tr>
+          <td>cakam teba kral</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+      <tr>
+          <td>ty si Boh, ktory vladne</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+      <tr>
+          <td>pan je moj pastier, nic mi nechyba</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+      <tr>
+          <td>ty si panom</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+      <tr>
+          <td>otvor mi oci duch svaty</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+      <tr>
+          <td>meno</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+      <tr>
+          <td>ride on time</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+      <tr>
+          <td>christmas eve</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+      <tr>
+          <td>stay with me</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+      <tr>
+          <td>plastic love</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+      <tr>
+          <td>drivers high</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+      <tr>
+          <td>country road</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+      <tr>
+          <td>jitensha</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+      <tr>
+          <td>i&rsquo;ve just seen a face</td>
+          <td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+      </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</article>
+
+
+    </main>
+
+    <footer>
+  <span class="footer-copy">© 2026  · Built with ❤️ in Hugo</span>
+  <div class="footer-links">
+    <a href="#">rss</a>
+    <a href="#">email</a>
+    <a href="#">github</a>
+  </div>
+</footer>
+
+
+<script>
+const WX = {
+  0:'clear',1:'mostly clear',2:'partly cloudy',3:'overcast',
+  45:'fog',48:'fog',51:'drizzle',53:'drizzle',55:'drizzle',
+  61:'rain',63:'rain',65:'heavy rain',
+  71:'snow',73:'snow',75:'heavy snow',
+  80:'showers',81:'showers',82:'thunderstorm',
+  95:'thunderstorm',96:'thunderstorm',99:'thunderstorm'
+};
+
+const KEY = 'wx_cache';
+const TTL = 10 * 60 * 1000;
+const el  = document.getElementById('wx');
+
+function render(d) {
+  const t    = Math.round(d.current.temperature_2m);
+  const desc = WX[d.current.weathercode] ?? '—';
+  el.textContent = `${t}° · ${desc}`;
+}
+
+const cached = JSON.parse(localStorage.getItem(KEY) || 'null');
+if (cached && Date.now() - cached.ts < TTL) {
+  render(cached.data);
+} else {
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=48.15&longitude=17.11&current=temperature_2m,weathercode&timezone=Europe%2FPrague')
+    .then(r => r.json())
+    .then(d => {
+      localStorage.setItem(KEY, JSON.stringify({ ts: Date.now(), data: d }));
+      render(d);
+    })
+    .catch(() => { el.textContent = '—'; });
+}
+</script>
+</body>
+
+</html>
