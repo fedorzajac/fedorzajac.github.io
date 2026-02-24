@@ -31,9 +31,9 @@
     </item>
     <item>
       <title>⏱️ Measuring Muon Decay Time</title>
-      <link>http://192.168.100.55:1313/blog/2026-01-22/2026-01-22-python-physics-math-data/</link>
+      <link>http://192.168.100.55:1313/blog/2026-01-22/</link>
       <pubDate>Thu, 22 Jan 2026 10:02:40 +0100</pubDate>
-      <guid>http://192.168.100.55:1313/blog/2026-01-22/2026-01-22-python-physics-math-data/</guid>
+      <guid>http://192.168.100.55:1313/blog/2026-01-22/</guid>
       <description>&lt;h3 id=&#34;measuring-muon-decay-time&#34;&gt;Measuring Muon Decay Time&lt;/h3&gt;&#xA;&lt;p&gt;I recently put together a small Kaggle notebook exploring muon decay time. It’s a simple project, but one I really enjoyed. Muons are short‑lived cosmic particles, and watching an exponential decay curve emerge from real timing data feels almost magical.&lt;/p&gt;&#xA;&lt;p&gt;The notebook isn’t meant to be groundbreaking—just a personal experiment where I load the data, clean it, plot the decay, and estimate the muon lifetime. Still, it reminded me why I love physics: even tiny particles can reveal big truths about how the universe works.&lt;/p&gt;</description>
     </item>
     <item>
